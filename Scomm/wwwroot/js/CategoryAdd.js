@@ -1,4 +1,7 @@
-﻿var first_click = true;
+﻿$(document).ready(function () {
+    $('#myTable').DataTable();
+});
+var first_click = true;
 $('.AddCategory').on('click', function () {
     if (first_click) {
         // do stuff for first click
