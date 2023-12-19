@@ -19,6 +19,11 @@ namespace DAL.Repository
         {
             _context.Set<T>().Add(entity);
         }
+        public void Update(T entity)
+        {
+            _context.Set<T>().Update(entity);
+            //_context.Entry(entity).CurrentValues.SetValues(entity);
+        }
 
         public void AddRange(IEnumerable<T> entities)
         {

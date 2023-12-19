@@ -18,7 +18,7 @@
         <div id="AddCategoryForm"></div>
 
         <div class="top-buffer"></div>
-        <table class="table table-bordered table-striped table-condensed" id="myTable">
+        <table class="table table-bordered table-striped table-condensed" id="categoryTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -30,12 +30,23 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                        <td class="Id">@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td class="CategoryName">
+                            <span>@Html.DisplayFor(modelItem => item.CategoryName)</span>
+                            <input type="text" value="@item.CategoryName" style="display:none">
+                        </td>
                         <td>
-                            <a id="editStudentModal" data-toggle="modal" asp-action="AddEditStudent" asp-route-id="@item.ID" data-target="#modal-action-student"
-                               class="btn btn-info">
+                            <a id="editStudentModal" href="javascript:;"
+                               class="btn btn-info Edit">
                                 <i class="glyphicon glyphicon-pencil"></i>  Edit
+                            </a>
+                            <a id="editStudentModal" href="javascript:;"
+                               class="btn btn-info Update" style="display:none">
+                                <i class="glyphicon glyphicon-pencil"></i>  Update
+                            </a>
+                            <a id="editStudentModal" href="javascript:;"
+                               class="btn btn-info Cancel" style="display:none">
+                                <i class="glyphicon glyphicon-pencil"></i>  Cancel
                             </a>
                             <a id="RemoveCategory" data-toggle="modal" asp-action="RemoveCategory" asp-route-id="@item.ID" class="btn btn-danger">
                                 <i class="glyphicon glyphicon-trash"></i>  Delete

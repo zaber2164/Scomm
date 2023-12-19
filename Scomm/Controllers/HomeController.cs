@@ -83,5 +83,18 @@ namespace Scomm.Controllers
                     "Error deleting data");
             }
         }
+        [HttpPost]
+        public IActionResult UpdateCategory(Category category)
+        {
+            //var Category = _unitOfWork.Categories.GetById(category.ID);
+
+            //if (Category == null)
+            //{
+            //    return NotFound($"Category with Id = {category.ID} not found");
+            //}
+            _unitOfWork.Categories.Update(category);
+            _unitOfWork.Complete();
+            return Ok();
+        }
     }
 }
