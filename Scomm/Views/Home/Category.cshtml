@@ -4,6 +4,119 @@
 <h1>@ViewData["Title"]</h1>
 
 @*<p>Use this page to detail your site's privacy policy.</p>*@
+
+@model IEnumerable<Category>
+@using DAL.EntityModel;
+@*@using System.Web.Helpers;*@
+@*@using System.Web;*@
+
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <button class="btn btn-success AddCategory">Add Category</button>
+        <div style="height:10px;"></div>
+        <div id="AddCategoryForm"></div>
+
+        <div class="top-buffer"></div>
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CategoryName</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                        <td>
+                            <a id="editStudentModal" data-toggle="modal" asp-action="AddEditStudent" asp-route-id="@item.ID" data-target="#modal-action-student"
+                               class="btn btn-info">
+                                <i class="glyphicon glyphicon-pencil"></i>  Edit
+                            </a>
+                            <a id="RemoveCategory" data-toggle="modal" asp-action="RemoveCategory" asp-route-id="@item.ID" class="btn btn-danger">
+                                <i class="glyphicon glyphicon-trash"></i>  Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts
+    {
+    <script src="~/js/CategoryAdd.js" asp-append-version="true"></script>
+}
+
+@*@{
+    Layout = null;
+    WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
+}*@
+
+@*<script>
+    $(document).ready(function () {
+        $("#demoGrid").DataTable({
+
+            "processing": true, // for show progress bar
+            "serverSide": true, // for process server side
+            "filter": true, // this is for disable filter (search box)
+            "orderMulti": false, // for disable multiple column at once
+            "pageLength": 5,
+
+            "ajax": {
+                "url": "/Demo/LoadData",
+                "type": "POST",
+                "datatype": "json"
+            },
+
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": [7],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [8],
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [9],
+                    "searchable": false,
+                    "orderable": false
+                }],
+
+            "columns": [
+                { "data": "CustomerID", "name": "CustomerID", "autoWidth": true },
+                { "data": "CompanyName", "name": "CompanyName", "autoWidth": true },
+                { "data": "ContactName", "title": "ContactName", "name": "ContactName", "autoWidth": true },
+                { "data": "ContactTitle", "name": "ContactTitle", "autoWidth": true },
+                { "data": "City", "name": "City", "autoWidth": true },
+                { "data": "PostalCode", "name": "PostalCode", "autoWidth": true },
+                { "data": "Country", "name": "Country", "autoWidth": true },
+                { "data": "Phone", "name": "Phone", "title": "Status", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta) { return '<a class="btn btn-info" href="/Demo/Edit/' + full.CustomerID + '">Edit</a>'; }
+                },
+                {
+                    data: null, render: function (data, type, row) {
+                        return "<a href='#' class='btn btn-danger' onclick=DeleteData('" + row.CustomerID + "'); >Delete</a>";
+                    }
+                },
+            ]
+        });
+    });
+</script>
 <div class="container">
     <br />
     <div style="width:90%; margin:0 auto;">
@@ -13,9 +126,15 @@
                     <th>CustomerID</th>
                     <th>CompanyName</th>
                     <th>ContactName</th>
-                    
+                    <th>ContactTitle</th>
+                    <th>City</th>
+                    <th>PostalCode</th>
+                    <th>Country</th>
+                    <th>Phone</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
         </table>
     </div>
-</div>
+</div>*@

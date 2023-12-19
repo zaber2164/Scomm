@@ -1,3 +1,8 @@
+using DAL;
+using DAL.Repository;
+using DAL.Repository.Implementation;
+using DAL.Repository.Interface;
+using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scomm.Data;
@@ -14,6 +19,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+#region Repositories
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+#endregion
+#region UnitOfWork
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+#endregion
 
 var app = builder.Build();
 
