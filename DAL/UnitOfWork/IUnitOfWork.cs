@@ -10,6 +10,7 @@ namespace DAL.UnitOfWork
     public interface IUnitOfWork : IDisposable
     {
         ICategoryRepository Categories { get; }
+        IItemRepository Items { get; }
         int Complete();
     }
 }

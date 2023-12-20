@@ -21,6 +21,7 @@ builder.Services.AddControllersWithViews();
 #region Repositories
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IItemRepository, ItemRepository>();
 #endregion
 #region UnitOfWork
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();

@@ -1,10 +1,23 @@
-﻿using ExcelDataReader;
+﻿using DAL;
+using DAL.EntityModel;
+using DAL.UnitOfWork;
+using ExcelDataReader;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using NuGet.Configuration;
 
 namespace Scomm.Controllers
 {
     public class ItemController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<HomeController> _logger;
+        public ItemController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        {
+            _logger = logger;
+            _unitOfWork = unitOfWork;
+        }
         public IActionResult Index()
         {
             return View();
@@ -42,21 +55,49 @@ namespace Scomm.Controllers
                         // 1. Use the reader methods
                         do
                         {
+                            bool isHeaderSkipped = false;
                             while (reader.Read())
                             {
-                                // reader.GetDouble(0);
-                                var rowData = new List<object>();
-                                for (int column = 0; column < reader.FieldCount; column++)
+                                //** code for showing in the grid **//
+                                //// reader.GetDouble(0);
+                                //var rowData = new List<object>();
+                                //for (int column = 0; column < reader.FieldCount; column++)
+                                //{
+                                //    rowData.Add(reader.GetValue(column));
+                                //    // insert into DB
+                                //    var dbItem = new Item
+                                //    {
+                                //        ItemName = reader.GetValue(column).ToString()
+                                //    };
+                                //    _unitOfWork.Items.Add(dbItem);
+                                //    _unitOfWork.Complete();
+                                //}
+                                //excelData.Add(rowData);
+
+                                if (!isHeaderSkipped)
                                 {
-                                    rowData.Add(reader.GetValue(column));
+                                    isHeaderSkipped = true;
+                                    continue;
                                 }
-                                excelData.Add(rowData);
+                                // Build the item object
+                                Item item = new Item();
+                                item.ItemName = reader.GetValue(1).ToString();
+                                item.ItemUnit = reader.GetValue(2).ToString();
+                                item.ItemQty = Convert.ToInt32(reader.GetValue(3).ToString());
+                                item.CategoryID = Convert.ToInt32(reader.GetValue(4).ToString());
+
+                                // save to DB using entity framework
+                                _unitOfWork.Items.Add(item);
+                                _unitOfWork.Complete();
                             }
                         } while (reader.NextResult());
                         ViewBag.excelData = excelData;
+                        ViewBag.Message = "success";
                     }
                 }
             }
+            else
+                ViewBag.Message = "empty";
             return View();
         }
     }

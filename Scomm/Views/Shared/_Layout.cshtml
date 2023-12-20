@@ -45,6 +45,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Category">Category</a>
                             </li>
                         }
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="UploadItemExcel">Upload Category Excel</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
