@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NuGet.Configuration;
+using System.Dynamic;
 
 namespace Scomm.Controllers
 {
@@ -22,7 +23,30 @@ namespace Scomm.Controllers
         [HttpGet]
         public IActionResult Item()
         {
-            return View();
+            dynamic mymodel = new ExpandoObject();
+
+            IEnumerable<Item> items = _unitOfWork.Items.GetItems();
+            IEnumerable<Category> categories = _unitOfWork.Categories.GetCategories();
+            IList<ItemViewModel> vitems = new List<ItemViewModel>();
+            foreach (var item in items)
+            {
+                ItemViewModel ivm = new ItemViewModel
+                {
+                    ID = item.ID,
+                    ItemName = item.ItemName,
+                    ItemUnit = item.ItemUnit,
+                    ItemQty = item.ItemQty,
+                    CategoryID = item.CategoryID,
+                    CategoryName = (from s in items
+                                    join r in categories on s.CategoryID equals r.ID
+                                    where r.ID == item.CategoryID
+                                    select r.CategoryName).FirstOrDefault().ToString(),
+                };
+                vitems.Add(ivm);
+            }
+            mymodel.Items = vitems;
+            mymodel.Categories = categories;
+            return View(mymodel);
         }
         public IActionResult UploadItemExcel()
         {
@@ -101,6 +125,53 @@ namespace Scomm.Controllers
             else
                 ViewBag.Message = "empty";
             return View();
+        }
+        [HttpPost]
+        public IActionResult AddItem(Item item)
+        {
+            var Item = new Item
+            {
+                ItemName = item.ItemName,
+                ItemUnit = item.ItemUnit,
+                ItemQty = item.ItemQty,
+                CategoryID = item.CategoryID
+            };
+            _unitOfWork.Items.Add(Item);
+            _unitOfWork.Complete();
+            return Ok();
+        }
+        public PartialViewResult AddItemPartialView()
+        {
+            return PartialView("_itemPartial", new Item());
+        }
+
+        [HttpGet("Home/RemoveItem/{id:int}")]
+        public ActionResult<Item> RemoveItem(int id)
+        {
+            try
+            {
+                var Item = _unitOfWork.Items.GetById(id);
+
+                if (Item == null)
+                {
+                    return NotFound($"Item with Id = {id} not found");
+                }
+                _unitOfWork.Items.Remove(Item);
+                _unitOfWork.Complete();
+                return RedirectToAction("Item", "Home");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error deleting data");
+            }
+        }
+        [HttpPost]
+        public IActionResult UpdateItem(Item Item)
+        {
+            _unitOfWork.Items.Update(Item);
+            _unitOfWork.Complete();
+            return Ok();
         }
     }
 }

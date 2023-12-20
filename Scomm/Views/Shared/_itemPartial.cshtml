@@ -1,0 +1,19 @@
+﻿@model Item
+@using DAL.EntityModel;
+
+<form id="myForm">
+    <div id="AddCategoryForm">
+        @Html.LabelFor(m => m.ItemName)
+        @Html.TextBoxFor(m => m.ItemName)
+
+        <div class="form-group" style="padding-top:10px;">
+            @Html.LabelFor(m => m.ItemUnit)
+            @Html.TextBoxFor(m => m.ItemUnit)
+        </div>
+        <div class="form-group" style="padding-top:10px;">
+            @Html.LabelFor(m => m.ItemQty)
+            @Html.TextBoxFor(m => m.ItemQty)
+        </div>
+
+    </div>
+</form>

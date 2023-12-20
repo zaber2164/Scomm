@@ -1,6 +1,7 @@
 ﻿using DAL;
 using DAL.EntityModel;
 using DAL.UnitOfWork;
+using ExcelDataReader;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -29,6 +30,7 @@ namespace Scomm.Controllers
             IEnumerable<Category> model = _unitOfWork.Categories.GetCategories();
             return View(model);
         }
+
         [HttpPost]
         public IActionResult AddCategory(Category category)
         {
@@ -77,6 +79,62 @@ namespace Scomm.Controllers
             _unitOfWork.Categories.Update(category);
             _unitOfWork.Complete();
             return Ok();
+        }
+        public IActionResult UploadCategoryExcel()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadCategoryExcel(IFormFile file)
+        {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            //Upload the excel file
+            if (file != null && file.Length > 0)
+            {
+                var uploadDirectory = $"{Directory.GetCurrentDirectory()}\\wwwroot\\Uploads";
+                if (!Directory.Exists(uploadDirectory))
+                {
+                    Directory.CreateDirectory(uploadDirectory);
+                }
+                var filePath = Path.Combine(uploadDirectory, file.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                //Read file
+                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    var excelData = new List<List<object>>();
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        // 1. Use the reader methods
+                        do
+                        {
+                            bool isHeaderSkipped = false;
+                            while (reader.Read())
+                            {
+                                if (!isHeaderSkipped)
+                                {
+                                    isHeaderSkipped = true;
+                                    continue;
+                                }
+                                // Build the category object
+                                Category category = new Category();
+                                category.CategoryName = reader.GetValue(1).ToString();
+
+                                // save to DB using entity framework
+                                _unitOfWork.Categories.Add(category);
+                                _unitOfWork.Complete();
+                            }
+                        } while (reader.NextResult());
+                        ViewBag.excelData = excelData;
+                        ViewBag.Message = "success";
+                    }
+                }
+            }
+            else
+                ViewBag.Message = "empty";
+            return View();
         }
     }
 }

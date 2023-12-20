@@ -48,7 +48,7 @@
                         @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="UploadItemExcel">Upload Category Excel</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="UploadCategoryExcel">Upload Category Excel</a>
                             </li>
                         }
                     </ul>

@@ -1,29 +1,86 @@
 ﻿@{
     ViewData["Title"] = "Item Page";
 }
+<h1>@ViewData["Title"]</h1>
 
-<div class="text-center">
-    @*<h1 class="display-4">Welcome</h1>*@
-    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
-    <div class="container">
-        <br />
-        <div style="width:90%; margin:0 auto;">
-            <table id="demoGrid" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                <thead>
+@*@model IEnumerable<Item>*@
+@model dynamic
+@using DAL.EntityModel;
+@*@using System.Web.Helpers;*@
+@*@using System.Web;*@
+
+<div class="top-buffer"></div>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <button class="btn btn-success AddItem">Add Item</button>
+        <div style="height:10px;"></div>
+        <div id="AddItemForm"></div>
+
+        <div class="top-buffer"></div>
+        <table class="table table-bordered table-striped table-condensed" id="ItemTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ItemName</th>
+                    <th>ItemUnit</th>
+                    <th>ItemQty</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ItemViewModel item in Model.Items)
+                {
                     <tr>
-                        <th>CustomerID</th>
-                        <th>CompanyName</th>
-                        <th>ContactName</th>
-                        <th>ContactTitle</th>
-                        <th>City</th>
-                        <th>PostalCode</th>
-                        <th>Country</th>
-                        <th>Phone</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <td class="Id">@Html.DisplayFor(modelItem => item.ID)</td>
+                        <td class="ItemName">
+                            <span>@Html.DisplayFor(modelItem => item.ItemName)</span>
+                            <input type="text" value="@item.ItemName" style="display:none">
+                        </td>
+                        <td class="ItemUnit">
+                            <span>@Html.DisplayFor(modelItem => item.ItemUnit)</span>
+                            <input type="text" value="@item.ItemUnit" style="display:none">
+                        </td>
+                        <td class="ItemQty">
+                            <span>@Html.DisplayFor(modelItem => item.ItemQty)</span>
+                            <input type="text" value="@item.ItemQty" style="display:none">
+                        </td>
+                        <td class="form-group CategoryID">
+                            @*<span>@Html.DisplayFor(modelItem => item.CategoryID)</span>
+                        <input type="text" value="@item.CategoryID" style="display:none">*@
+
+                            @*@Html.LabelFor(modelItem => item.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(modelItem => item.CategoryName, new SelectList(Model.Categories,
+                            "ID", "CategoryName"), "Select ...", new { @class = "form-control" })
+                            </div>
+                        </td>
+                        @*@Html.ValidationMessageFor(model => model.CountyId, "", new { @class = "text-danger" })*@
+                        <td>
+                            <a href="javascript:;"
+                               class="btn btn-info Edit">
+                                <i class="glyphicon glyphicon-pencil"></i>  Edit
+                            </a>
+                            <a href="javascript:;"
+                               class="btn btn-info Update" style="display:none">
+                                <i class="glyphicon glyphicon-pencil"></i>  Update
+                            </a>
+                            <a href="javascript:;"
+                               class="btn btn-info Cancel" style="display:none">
+                                <i class="glyphicon glyphicon-pencil"></i>  Cancel
+                            </a>
+                            <a id="RemoveItem" data-toggle="modal" asp-action="RemoveItem" asp-route-id="@item.ID" class="btn btn-danger" asp-controller="Item">
+                                <i class="glyphicon glyphicon-trash"></i>  Delete
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
+
+@section scripts
+    {
+    <script src="~/js/Item.js" asp-append-version="true"></script>
+}
