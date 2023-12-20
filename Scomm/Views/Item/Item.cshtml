@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (Item item in Model.Items)
+                @foreach (ItemViewModel item in Model.Items)
                 {
                     <tr>
                         <td class="Id">@Html.DisplayFor(modelItem => item.ID)</td>
@@ -47,13 +47,14 @@
                         </td>
                         <td class="form-group CategoryID">
                             <span>@Html.DisplayFor(modelItem => item.CategoryID)</span>
-                            <input type="text" value="@item.CategoryID" style="display:none" disabled="disabled">
+                        <input type="text" value="@item.CategoryID" style="display:none" disabled="disabled">
 
                             @*@Html.LabelFor(modelItem => item.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                            @*<div class="col-md-10">
-                        @Html.DropDownListFor(modelItem => item.CategoryName, new SelectList(Model.Categories,
-                        "ID", "CategoryName"), "Select ...", new { @class = "form-control" })
-                        </div>*@
+                            @*<span id="xx" style="display:none;">item.CategoryID</span>
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(modelItem => item.CategoryID, new SelectList(Model.Categories,
+                            "ID", "CategoryName"), item.CategoryName, new { @class = "form-control" })
+                            </div>*@
                         </td>
                         @*@Html.ValidationMessageFor(model => model.CountyId, "", new { @class = "text-danger" })*@
                         <td>

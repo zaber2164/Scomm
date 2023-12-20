@@ -2,23 +2,22 @@
 @using DAL.EntityModel;
 
 <form id="myForm">
-    <div id="AddCategoryForm">
-        @Html.LabelFor(m => m.ItemName)
-        @Html.TextBoxFor(m => m.ItemName)
-
-        <div class="form-group" style="padding-top:10px;">
-            @Html.LabelFor(m => m.ItemUnit)
-            @Html.TextBoxFor(m => m.ItemUnit)
-        </div>
-        <div class="form-group" style="padding-top:10px;">
-            @Html.LabelFor(m => m.ItemQty)
-            @Html.TextBoxFor(m => m.ItemQty)
-        </div>
-        <div class="form-group">
-            @*@Html.LabelFor(m => m.CategoryID)*@
-            <label>Category</label>
-            @Html.DropDownListFor(modelItem => modelItem.CategoryID, new SelectList(Model.Categories,
-            "ID", "CategoryName"), "Select ...", new { @class = "col-md-4" })
-        </div>
+    <div id="AddCategoryForm" class="form-group">
+        @Html.LabelFor(m => m.ItemName,new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ItemName,new { @class = "form-control" })
+    </div>
+    <div class="form-group" style="padding-top:10px;">
+        @Html.LabelFor(m => m.ItemUnit,new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ItemUnit,new { @class = "form-control" })
+    </div>
+    <div class="form-group" style="padding-top:10px;">
+        @Html.LabelFor(m => m.ItemQty,new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.ItemQty,new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @*@Html.LabelFor(m => m.CategoryID)*@
+        <label class="control-label">Category</label>
+        @Html.DropDownListFor(modelItem => modelItem.CategoryID, new SelectList(Model.Categories,
+        "ID", "CategoryName"), "Select ...", new { @class = "col-md-4 form-control" })
     </div>
 </form>

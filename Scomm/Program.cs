@@ -3,6 +3,7 @@ using DAL.Repository;
 using DAL.Repository.Implementation;
 using DAL.Repository.Interface;
 using DAL.UnitOfWork;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+//Set Session Timeout. Default is 20 minutes.
+builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(1); });
+//cookie
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "AspNetCore.Identity.Application";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.SlidingExpiration = true;
+});
 #region Repositories
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
@@ -27,6 +37,7 @@ builder.Services.AddTransient<IItemRepository, ItemRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 #endregion
 
+builder.Services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory())).SetDefaultKeyLifetime(TimeSpan.FromDays(7));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,6 +64,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+//Enable Session.
+app.UseSession();
 
 using (var scope = app.Services.CreateScope())
 {

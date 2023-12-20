@@ -94,6 +94,7 @@ $("body").on("click", "#ItemTable .Update", function () {
         ItemUnit: row.find(".ItemUnit").find("span").html(),
         ItemQty: row.find(".ItemQty").find("span").html(),
         CategoryID: row.find(".CategoryID").find("span").html()
+        /*CategoryID: $("#CategoryID").val($(this).text())*/
     }
     debugger
     $.ajax({
