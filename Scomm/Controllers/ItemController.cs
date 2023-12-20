@@ -27,24 +27,25 @@ namespace Scomm.Controllers
 
             IEnumerable<Item> items = _unitOfWork.Items.GetItems();
             IEnumerable<Category> categories = _unitOfWork.Categories.GetCategories();
-            IList<ItemViewModel> vitems = new List<ItemViewModel>();
-            foreach (var item in items)
-            {
-                ItemViewModel ivm = new ItemViewModel
-                {
-                    ID = item.ID,
-                    ItemName = item.ItemName,
-                    ItemUnit = item.ItemUnit,
-                    ItemQty = item.ItemQty,
-                    CategoryID = item.CategoryID,
-                    CategoryName = (from s in items
-                                    join r in categories on s.CategoryID equals r.ID
-                                    where r.ID == item.CategoryID
-                                    select r.CategoryName).FirstOrDefault().ToString(),
-                };
-                vitems.Add(ivm);
-            }
-            mymodel.Items = vitems;
+            //IList<ItemViewModel> vitems = new List<ItemViewModel>();
+            //foreach (var item in items)
+            //{
+            //    ItemViewModel ivm = new ItemViewModel
+            //    {
+            //        ID = item.ID,
+            //        ItemName = item.ItemName,
+            //        ItemUnit = item.ItemUnit,
+            //        ItemQty = item.ItemQty,
+            //        CategoryID = item.CategoryID,
+            //        CategoryName = (from s in items
+            //                        join r in categories on s.CategoryID equals r.ID
+            //                        where r.ID == item.CategoryID
+            //                        select r.CategoryName).FirstOrDefault().ToString(),
+            //    };
+            //    vitems.Add(ivm);
+            //}
+
+            mymodel.Items = items;
             mymodel.Categories = categories;
             return View(mymodel);
         }
@@ -142,7 +143,8 @@ namespace Scomm.Controllers
         }
         public PartialViewResult AddItemPartialView()
         {
-            return PartialView("_itemPartial", new Item());
+            IEnumerable<Category> categories = _unitOfWork.Categories.GetCategories();
+            return PartialView("_itemPartial", new ItemViewModel { Categories = categories.ToList() });
         }
 
         [HttpGet("Home/RemoveItem/{id:int}")]

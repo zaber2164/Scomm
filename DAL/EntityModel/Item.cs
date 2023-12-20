@@ -22,6 +22,7 @@ namespace DAL.EntityModel
         public string ItemUnit { get; set; }
         public int ItemQty { get; set; }
         public int CategoryID { get; set; }
-        public string CategoryName { get; set; }
+        //public string CategoryName { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }
