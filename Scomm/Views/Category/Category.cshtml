@@ -48,7 +48,7 @@
                                class="btn btn-info Cancel" style="display:none">
                                 <i class="glyphicon glyphicon-pencil"></i>  Cancel
                             </a>
-                            <a id="RemoveCategory" data-toggle="modal" asp-action="RemoveCategory" asp-route-id="@item.ID" class="btn btn-danger">
+                            <a id="RemoveCategory" data-toggle="modal" asp-action="RemoveCategory" asp-route-id="@item.ID" class="btn btn-danger" asp-controller="Category">
                                 <i class="glyphicon glyphicon-trash"></i>  Delete
                             </a>
                         </td>

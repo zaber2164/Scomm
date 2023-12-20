@@ -11,14 +11,16 @@ namespace Scomm.Controllers
 {
     public class ItemController : Controller
     {
+        private readonly ILogger<ItemController> _logger;
+        private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<HomeController> _logger;
-        public ItemController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        public ItemController(ILogger<ItemController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Item()
         {
             return View();
         }

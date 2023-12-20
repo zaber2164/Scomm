@@ -17,7 +17,7 @@ $('.AddCategory').on('click', function () {
         title: 'Add Category Form',
         modal: true,
         open: function () {
-            $(this).load('/Home/AddCategoryPartialView');
+            $(this).load('/Category/AddCategoryPartialView');
         },
         buttons: {
             "Add Category": function () {
@@ -32,7 +32,7 @@ $('.AddCategory').on('click', function () {
 });
 function addCategoryInfo() {
     $.ajax({
-        url: '/Home/AddCategory',
+        url: '/Category/AddCategory',
         type: 'POST',
         data: $("#myForm").serialize(),
         success: function (data) {
@@ -54,7 +54,7 @@ function addCategoryInfo() {
 }
 var ReloadTableData = function () {
     $.ajax({
-        url: '/Home/Category',
+        url: '/Category/Category',
         type: 'GET',
     });
 }
@@ -94,7 +94,7 @@ $("body").on("click", "#categoryTable .Update", function () {
     }
     debugger
     $.ajax({
-        url: '/Home/UpdateCategory',
+        url: '/Category/UpdateCategory',
         type: 'POST',
         data: { category: categoryViewModel }
     });

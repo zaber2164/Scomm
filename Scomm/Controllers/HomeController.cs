@@ -20,80 +20,15 @@ namespace Scomm.Controllers
             _context = context;
             _unitOfWork = unitOfWork;
         }
-
-        [HttpGet]
-        public IActionResult Item()
+        public ActionResult Index()
         {
             return View();
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult Category()
-        {
-            //IEnumerable<Category> model = _context.Category.Select(s => new Category
-            //{
-            //    ID = s.ID,
-            //    CategoryName = s.CategoryName
-            //});
-            IEnumerable<Category> model = _unitOfWork.Categories.GetCategories();
-            return View(model);
-        }
-        [HttpPost]
-        public IActionResult AddCategory(Category category)
-        {
-            var Category = new Category
-            {
-                CategoryName = category.CategoryName
-            };
-            _unitOfWork.Categories.Add(Category);
-            _unitOfWork.Complete();
-            return Ok();
-        }
-        public PartialViewResult AddCategoryPartialView()
-        {
-            return PartialView("_categoryAdd", new Category());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [HttpGet("Home/RemoveCategory/{id:int}")]
-        public ActionResult<Category> RemoveCategory(int id)
-        {
-            try
-            {
-                var Category = _unitOfWork.Categories.GetById(id);
-
-                if (Category == null)
-                {
-                    return NotFound($"Category with Id = {id} not found");
-                }
-                _unitOfWork.Categories.Remove(Category);
-                _unitOfWork.Complete();
-                return RedirectToAction("Category", "Home");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error deleting data");
-            }
-        }
-        [HttpPost]
-        public IActionResult UpdateCategory(Category category)
-        {
-            //var Category = _unitOfWork.Categories.GetById(category.ID);
-
-            //if (Category == null)
-            //{
-            //    return NotFound($"Category with Id = {category.ID} not found");
-            //}
-            _unitOfWork.Categories.Update(category);
-            _unitOfWork.Complete();
-            return Ok();
         }
     }
 }
