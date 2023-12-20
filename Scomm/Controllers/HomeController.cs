@@ -3,7 +3,6 @@ using DAL.EntityModel;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Scomm.Data;
 using Scomm.Models;
 using System.Diagnostics;
 

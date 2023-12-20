@@ -5,7 +5,6 @@ using DAL.Repository.Interface;
 using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Scomm.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

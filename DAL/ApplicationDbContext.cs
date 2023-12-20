@@ -12,5 +12,6 @@ namespace DAL
         {
         }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Item> Item { get; set; }
     }
 }
