@@ -1,0 +1,48 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <label>Select Excel File</label>
+        <input type="file" name="file" />
+    </div>
+    <div class="row" style="padding-top:5px;">
+        <div class="col-3">
+            <input type="submit" asp-controller="Item" asp-action="UploadItemExcel" class="btn btn-dark" value="Read Excel File" />
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            @if (ViewBag.excelData != null && ViewBag.excelData.Count > 0)
+            {
+                @foreach (var header in ViewBag.excelData[0])
+                {
+                    <th>
+                        @header
+                    </th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.excelData != null && ViewBag.excelData.Count > 1)
+        {
+            @for (int i = 1; i < ViewBag.excelData.Count; i++)
+            {
+                <tr>
+                    @foreach (var cell in ViewBag.excelData[i])
+                    {
+                        <td>
+                            @cell
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>
