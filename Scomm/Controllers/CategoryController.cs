@@ -8,6 +8,7 @@ using System.Data;
 
 namespace Scomm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ILogger<CategoryController> _logger;
@@ -18,7 +19,7 @@ namespace Scomm.Controllers
             _logger = logger;
             _unitOfWork = unitOfWork;
         }
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         public IActionResult Category()
         {
