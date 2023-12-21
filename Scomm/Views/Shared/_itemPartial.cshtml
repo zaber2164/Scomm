@@ -5,19 +5,23 @@
     <div id="AddCategoryForm" class="form-group">
         @Html.LabelFor(m => m.ItemName,new { @class = "control-label" })
         @Html.TextBoxFor(m => m.ItemName,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.ItemName,"Item name is required.", new { @class = "text-danger" })
     </div>
     <div class="form-group" style="padding-top:10px;">
         @Html.LabelFor(m => m.ItemUnit,new { @class = "control-label" })
         @Html.TextBoxFor(m => m.ItemUnit,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.ItemUnit,"Item unit is required.", new { @class = "text-danger" })
     </div>
     <div class="form-group" style="padding-top:10px;">
         @Html.LabelFor(m => m.ItemQty,new { @class = "control-label" })
         @Html.TextBoxFor(m => m.ItemQty,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.ItemQty,"Item quantity is required.", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         @*@Html.LabelFor(m => m.CategoryID)*@
         <label class="control-label">Category</label>
         @Html.DropDownListFor(modelItem => modelItem.CategoryID, new SelectList(Model.Categories,
         "ID", "CategoryName"), "Select ...", new { @class = "col-md-4 form-control" })
+        @Html.ValidationMessageFor(m=>m.CategoryID,"CategoryID is required.", new { @class = "text-danger" })
     </div>
 </form>

@@ -130,16 +130,20 @@ namespace Scomm.Controllers
         [HttpPost]
         public IActionResult AddItem(Item item)
         {
-            var Item = new Item
+            if (ModelState.IsValid)
             {
-                ItemName = item.ItemName,
-                ItemUnit = item.ItemUnit,
-                ItemQty = item.ItemQty,
-                CategoryID = item.CategoryID
-            };
-            _unitOfWork.Items.Add(Item);
-            _unitOfWork.Complete();
-            return Ok();
+                var Item = new Item
+                {
+                    ItemName = item.ItemName,
+                    ItemUnit = item.ItemUnit,
+                    ItemQty = item.ItemQty,
+                    CategoryID = item.CategoryID
+                };
+                _unitOfWork.Items.Add(Item);
+                _unitOfWork.Complete();
+                return Ok();
+            }
+            return BadRequest();
         }
         public PartialViewResult AddItemPartialView()
         {
@@ -171,9 +175,13 @@ namespace Scomm.Controllers
         [HttpPost]
         public IActionResult UpdateItem(Item Item)
         {
-            _unitOfWork.Items.Update(Item);
-            _unitOfWork.Complete();
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Items.Update(Item);
+                _unitOfWork.Complete();
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

@@ -36,6 +36,8 @@
                         <td class="ItemName">
                             <span>@Html.DisplayFor(modelItem => item.ItemName)</span>
                             <input type="text" value="@item.ItemName" style="display:none">
+                            @*<span class="field-validation-valid" data-valmsg-for="ItemName" data-valmsg-replace="true"></span>*@
+                            @*data-val-required="The ItemName field is required." id="ItemName" name="ItemName"*@
                         </td>
                         <td class="ItemUnit">
                             <span>@Html.DisplayFor(modelItem => item.ItemUnit)</span>
@@ -47,14 +49,14 @@
                         </td>
                         <td class="form-group CategoryID">
                             <span>@Html.DisplayFor(modelItem => item.CategoryID)</span>
-                        <input type="text" value="@item.CategoryID" style="display:none" disabled="disabled">
+                            <input type="text" value="@item.CategoryID" style="display:none" disabled="disabled">
 
                             @*@Html.LabelFor(modelItem => item.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })*@
                             @*<span id="xx" style="display:none;">item.CategoryID</span>
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(modelItem => item.CategoryID, new SelectList(Model.Categories,
-                            "ID", "CategoryName"), item.CategoryName, new { @class = "form-control" })
-                            </div>*@
+                        <div class="col-md-10">
+                        @Html.DropDownListFor(modelItem => item.CategoryID, new SelectList(Model.Categories,
+                        "ID", "CategoryName"), item.CategoryName, new { @class = "form-control" })
+                        </div>*@
                         </td>
                         @*@Html.ValidationMessageFor(model => model.CountyId, "", new { @class = "text-danger" })*@
                         <td>

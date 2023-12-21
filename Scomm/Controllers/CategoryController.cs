@@ -34,13 +34,17 @@ namespace Scomm.Controllers
         [HttpPost]
         public IActionResult AddCategory(Category category)
         {
-            var Category = new Category
+            if (ModelState.IsValid)
             {
-                CategoryName = category.CategoryName
-            };
-            _unitOfWork.Categories.Add(Category);
-            _unitOfWork.Complete();
-            return Ok();
+                var Category = new Category
+                {
+                    CategoryName = category.CategoryName
+                };
+                _unitOfWork.Categories.Add(Category);
+                _unitOfWork.Complete();
+                return Ok();
+            }
+            return BadRequest();
         }
         public PartialViewResult AddCategoryPartialView()
         {
@@ -76,9 +80,13 @@ namespace Scomm.Controllers
             //{
             //    return NotFound($"Category with Id = {category.ID} not found");
             //}
-            _unitOfWork.Categories.Update(category);
-            _unitOfWork.Complete();
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Categories.Update(category);
+                _unitOfWork.Complete();
+                return Ok();
+            }
+            return BadRequest();
         }
         public IActionResult UploadCategoryExcel()
         {
