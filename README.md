@@ -3,8 +3,8 @@
  
 1.	First change the DefaultConnection in the appsettings.json
 2.	Run the following commands in succession in package manager console:-
-Remove-Migration -Force
-Add-Migration InitialMigration
+Remove-Migration -Force,
+Add-Migration InitialMigration,
 Update-Database
 3.	Set the Scomm project as startup & run using F5
 4.	Login as “Admin” using the credentials:-
