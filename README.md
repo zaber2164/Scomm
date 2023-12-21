@@ -12,8 +12,8 @@ Email = "admin@admin.com"; password = "Test@123"
 5.	Browse 
 
 # some things I skipped due to lack of time:
-1.	Form validations which could be done using FluentValidation
-2.	Bulk insert using stored procedure which could be done using sql server table type & EF/dapper
-3.	Unit testing
-4.	In memory caching using IMemoryCache
+
+1.	Bulk insert using stored procedure which could be done using sql server table type & EF/dapper
+2.	Unit testing
+3.	In memory caching using IMemoryCache
 
