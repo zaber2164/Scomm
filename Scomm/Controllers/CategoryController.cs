@@ -52,7 +52,7 @@ namespace Scomm.Controllers
             return PartialView("_categoryAdd", new Category());
         }
         [HttpGet("Category/RemoveCategory/{id:int}")]
-        public ActionResult<Category> RemoveCategory(int id)
+        public ActionResult<Category> RemoveCategory(long id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Scomm.Controllers
                 }
                 _unitOfWork.Categories.Remove(Category);
                 _unitOfWork.Complete();
-                return RedirectToAction("Category", "Home");
+                return RedirectToAction("Category", "Category");
             }
             catch (Exception)
             {

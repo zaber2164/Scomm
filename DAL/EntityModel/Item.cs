@@ -13,7 +13,7 @@ namespace DAL.EntityModel
         public string ItemName { get; set; }
         public string ItemUnit { get; set; }
         public int ItemQty { get; set; }
-        public int CategoryID { get; set; }
+        public long CategoryID { get; set; }
         //public string CategoryName { get; set; }
     }
     public class ItemViewModel
@@ -26,7 +26,7 @@ namespace DAL.EntityModel
         [Required]
         public int ItemQty { get; set; }
         [Required]
-        public int CategoryID { get; set; }
+        public long CategoryID { get; set; }
         public string CategoryName { get; set; }
         public List<Category> Categories { get; set; }
     }

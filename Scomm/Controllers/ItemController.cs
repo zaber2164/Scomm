@@ -164,7 +164,7 @@ namespace Scomm.Controllers
                 }
                 _unitOfWork.Items.Remove(Item);
                 _unitOfWork.Complete();
-                return RedirectToAction("Item", "Home");
+                return RedirectToAction("Item", "Item");
             }
             catch (Exception ex)
             {
