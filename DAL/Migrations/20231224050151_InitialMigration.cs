@@ -70,7 +70,7 @@ namespace DAL.Migrations
                     ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemUnit = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ItemQty = table.Column<int>(type: "int", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                    CategoryID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
