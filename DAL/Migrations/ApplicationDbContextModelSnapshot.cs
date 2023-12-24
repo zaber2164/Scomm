@@ -47,7 +47,7 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ID"), 1L, 1);
 
-                    b.Property<int>("CategoryID")
+                    b.Property<long>("CategoryID")
                         .HasColumnType("bigint");
 
                     b.Property<string>("ItemName")
