@@ -151,7 +151,7 @@ namespace Scomm.Controllers
             return PartialView("_itemPartial", new ItemViewModel { Categories = categories.ToList() });
         }
 
-        [HttpGet("Home/RemoveItem/{id:int}")]
+        [HttpGet("Item/RemoveItem/{id:int}")]
         public ActionResult<Item> RemoveItem(int id)
         {
             try
@@ -166,7 +166,7 @@ namespace Scomm.Controllers
                 _unitOfWork.Complete();
                 return RedirectToAction("Item", "Home");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     "Error deleting data");

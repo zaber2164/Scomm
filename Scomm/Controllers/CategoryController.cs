@@ -51,7 +51,7 @@ namespace Scomm.Controllers
         {
             return PartialView("_categoryAdd", new Category());
         }
-        [HttpGet("Home/RemoveCategory/{id:int}")]
+        [HttpGet("Category/RemoveCategory/{id:int}")]
         public ActionResult<Category> RemoveCategory(int id)
         {
             try
